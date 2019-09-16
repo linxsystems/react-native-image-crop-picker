@@ -133,7 +133,8 @@ ImagePicker.clean().then(() => {
 | maxFiles (ios only)                     |            number (default 5)            | Max number of files to select when using `multiple` option |
 | waitAnimationEnd (ios only)             |           bool (default true)            | Promise will resolve/reject once ViewController `completion` block is called |
 | smartAlbums (ios only)                  | array ([supported values](https://github.com/ivpusic/react-native-image-crop-picker/blob/master/README.md#smart-album-types-ios)) (default ['UserLibrary', 'PhotoStream', 'Panoramas', 'Videos', 'Bursts']) | List of smart albums to choose from      |
-| useFrontCamera                          |           bool (default false)           | Whether to default to the front/'selfie' camera when opened. Please note that not all Android devices handle this parameter, see [issue #1058](https://github.com/ivpusic/react-native-image-crop-picker/issues/1058)|
+| useFrontCamera (ios only)               |           bool (default false)           | Whether to default to the front/'selfie' camera when opened |
+| compressVideo (ios only)                |           bool (default true)            | Whether to compress the selected videos |
 | compressVideoPreset (ios only)          |      string (default MediumQuality)      | Choose which preset will be used for video compression |
 | compressImageMaxWidth                   |          number (default none)           | Compress image with maximum width        |
 | compressImageMaxHeight                  |          number (default none)           | Compress image with maximum height       |
@@ -146,7 +147,7 @@ ImagePicker.clean().then(() => {
 | showCropFrame (android only)       |           bool (default true)            | Whether to show crop frame during cropping |
 | hideBottomControls (android only)       |           bool (default false)           | Whether to display bottom controls       |
 | enableRotationGesture (android only)    |           bool (default false)           | Whether to enable rotating the image by hand gesture |
-| cropperChooseText (ios only)            |           string (default choose)        | Choose button text |
+| cropperChooseText (ios only)            |           string (default choose)        | Choose button text |
 | cropperCancelText (ios only)            |           string (default Cancel)        | Cancel button text |
 
 #### Smart Album Types (ios)

@@ -4,7 +4,7 @@
 
 <img src="svg.svg" width="50%" height="50%" />
 
-iOS/Android image picker with support for camera, video, configurable compression, multiple images and cropping
+iOS/Android image picker with support for camera, configurable compression, multiple images and cropping
 
 ## Result
 
@@ -58,25 +58,13 @@ ImagePicker.openPicker({
 **Android: The prop 'cropping' has been known to cause videos not to be display in the gallery on Android. Please do not set cropping to true when selecting videos.**
 
 
-### Select from camera 
-
-#### Image
+### Select from camera
 
 ```javascript
 ImagePicker.openCamera({
   width: 300,
   height: 400,
-  cropping: true,
-}).then(image => {
-  console.log(image);
-});
-```
-
-#### Video
-
-```javascript
-ImagePicker.openCamera({
-  mediaType: 'video',
+  cropping: true
 }).then(image => {
   console.log(image);
 });
@@ -115,7 +103,7 @@ ImagePicker.clean().then(() => {
 | height                                  |                  number                  | Height of result image when used with `cropping` option |
 | multiple                                |           bool (default false)           | Enable or disable multiple image selection |
 | writeTempFile (ios only)                |           bool (default true)            | When set to false, does not write temporary files for the selected images. This is useful to improve performance when you are retrieving file contents with the `includeBase64` option and don't need to read files from disk. |
-| includeBase64                           |           bool (default false)           | When set to true, the image file content will be available as a base64-encoded string in the `data` property. Hint: To use this string as an image source, use it like: ``<Image source={{uri: `data:${image.mime};base64,${image.data}`}} />`` |
+| includeBase64                           |           bool (default false)           | When set to true, the image file content will be available as a base64-encoded string in the `data` property. Hint: To use this string as an image source, use it like: ``<Image source={{uri: `data:${image.mime};base64,${(new Buffer(image.data)).toString('base64')}`}} />`` |
 | includeExif                           |           bool (default false)           | Include image exif data in the response |
 | avoidEmptySpaceAroundImage            |           bool (default true)           |  When set to true, the image will always fill the mask space. |
 | cropperActiveWidgetColor (android only) |       string (default `"#424242"`)       | When cropping image, determines ActiveWidget color. |
@@ -129,7 +117,8 @@ ImagePicker.clean().then(() => {
 | maxFiles (ios only)                     |            number (default 5)            | Max number of files to select when using `multiple` option |
 | waitAnimationEnd (ios only)             |           bool (default true)            | Promise will resolve/reject once ViewController `completion` block is called |
 | smartAlbums (ios only)                  | array ([supported values](https://github.com/ivpusic/react-native-image-crop-picker/blob/master/README.md#smart-album-types-ios)) (default ['UserLibrary', 'PhotoStream', 'Panoramas', 'Videos', 'Bursts']) | List of smart albums to choose from      |
-| useFrontCamera                          |           bool (default false)           | Whether to default to the front/'selfie' camera when opened |
+| useFrontCamera (ios only)               |           bool (default false)           | Whether to default to the front/'selfie' camera when opened |
+| compressVideo (ios only)                |           bool (default true)            | Whether to compress the selected videos |
 | compressVideoPreset (ios only)          |      string (default MediumQuality)      | Choose which preset will be used for video compression |
 | compressImageMaxWidth                   |          number (default none)           | Compress image with maximum width        |
 | compressImageMaxHeight                  |          number (default none)           | Compress image with maximum height       |
@@ -137,12 +126,10 @@ ImagePicker.clean().then(() => {
 | loadingLabelText (ios only)             | string (default "Processing assets...")  | Text displayed while photo is loading in picker |
 | mediaType                               |           string (default any)           | Accepted mediaType for image selection, can be one of: 'photo', 'video', or 'any' |
 | showsSelectedCount (ios only)           |           bool (default true)            | Whether to show the number of selected assets |
-| forceJpg (ios only)           |           bool (default false)            | Whether to convert photos to JPG. This will also convert any Live Photo into its JPG representation |
 | showCropGuidelines (android only)       |           bool (default true)            | Whether to show the 3x3 grid on top of the image during cropping |
-| showCropFrame (android only)       |           bool (default true)            | Whether to show crop frame during cropping |
 | hideBottomControls (android only)       |           bool (default false)           | Whether to display bottom controls       |
 | enableRotationGesture (android only)    |           bool (default false)           | Whether to enable rotating the image by hand gesture |
-| cropperChooseText (ios only)            |           string (default choose)        | Choose button text |
+| cropperChooseText (ios only)            |           string (default choose)        | Choose button text |
 | cropperCancelText (ios only)            |           string (default Cancel)        | Cancel button text |
 
 #### Smart Album Types (ios)
@@ -257,17 +244,10 @@ In Xcode open Info.plist and add string key `NSPhotoLibraryUsageDescription` wit
 
 ##### Only if you are not using Cocoapods
 
+- Drag and drop the ios/ImageCropPickerSDK folder to your xcode project. (Make sure Copy items if needed IS ticked)
 - Click on project General tab
   - Under `Deployment Info` set `Deployment Target` to `8.0`
   - Under `Embedded Binaries` click `+` and add `RSKImageCropper.framework` and `QBImagePicker.framework`
-  
-#### Step Optional - To localizate the camera / gallery text buttons
-
-- Open your Xcode project
-- Go to your project settings by opening the project name on the Navigation (left side)
-- Select your project in the project list 
-- Should be into the Info tab and add in Localizations the language your app was missing throughout the +
-- Rebuild and you should now have your app camera and gallery with the classic ios text in the language you added.
 
 ### Android
 
@@ -337,10 +317,6 @@ android {
 - [Optional] If you want to use camera picker in your project, add following to `app\src\main\AndroidManifest.xml`
   - `<uses-permission android:name="android.permission.CAMERA"/>`
 
-- [Optional] If you want to use front camera, also add following to `app\src\main\AndroidManifest.xml`
-  - `<uses-feature android:name="android.hardware.camera" android:required="false" />`
-  - `<uses-feature android:name="android.hardware.camera.front" android:required="false" />`
-
 ## Production build
 
 ### iOS
@@ -363,6 +339,7 @@ Details for second approach:
 ## TO DO
 
 - [ ] [Android] Standardize multiple select
+- [ ] [Android] Pick remote media
 - [ ] [Android] Video compression
 
 

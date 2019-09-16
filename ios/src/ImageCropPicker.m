@@ -503,16 +503,16 @@ RCT_EXPORT_METHOD(openCropper:(NSDictionary *)options
         completion([self createAttachmentResponse:nil
                                          withExif:nil
                                     withSourceURL:[sourceURL absoluteString]
-                              withLocalIdentifier: forAsset.localIdentifier
-                                     withFilename:[forAsset valueForKey:@"filename"]
+                              withLocalIdentifier:localIdentifier
+                                     withFilename:fileName
                                         withWidth:[NSNumber numberWithFloat:track.naturalSize.width]
                                        withHeight:[NSNumber numberWithFloat:track.naturalSize.height]
                                          withMime:@"video/mp4"
                                          withSize:fileSizeValue
                                          withData:nil
                                          withRect:CGRectNull
-                                 withCreationDate:forAsset.creationDate
-                             withModificationDate:forAsset.modificationDate
+                                 withCreationDate:asset.creationDate
+                             withModificationDate:asset.modificationDate
                     ]);
         return;
     }

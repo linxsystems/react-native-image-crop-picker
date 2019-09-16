@@ -511,8 +511,8 @@ RCT_EXPORT_METHOD(openCropper:(NSDictionary *)options
                                          withSize:fileSizeValue
                                          withData:nil
                                          withRect:CGRectNull
-                                 withCreationDate:asset.creationDate
-                             withModificationDate:asset.modificationDate
+                                 withCreationDate:nil
+                             withModificationDate:nil
                     ]);
         return;
     }
